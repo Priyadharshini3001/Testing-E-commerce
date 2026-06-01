@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="AutomationSuite">
+
+    <test name="EcommerceTests">
+
+        <classes>
+
+            <class name="com.autoqa.tests.LoginTest"/>
+
+            <class name="com.autoqa.tests.ValidationTest"/>
+
+            <class name="com.autoqa.tests.ProductTest"/>
+
+            <class name="com.autoqa.tests.CartTest"/>
+
+            <class name="com.autoqa.tests.CheckoutTest"/>
+
+        </classes>
+
+    </test>
+
+</suite>

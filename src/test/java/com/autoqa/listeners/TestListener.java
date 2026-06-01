@@ -1,7 +1,6 @@
 package com.autoqa.listeners;
 
 import com.autoqa.utils.ExtentManager;
-import com.autoqa.utils.ScreenshotUtil;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 

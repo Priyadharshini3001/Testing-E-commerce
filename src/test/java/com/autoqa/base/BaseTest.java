@@ -1,25 +1,39 @@
 package com.autoqa.base;
 
-import com.autoqa.utils.ConfigReader;
-import com.autoqa.utils.DriverFactory;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
+import java.time.Duration;
+
 public class BaseTest {
 
-    public WebDriver driver;
+    protected WebDriver driver;
 
     @BeforeMethod
     public void setup() {
 
-        driver = DriverFactory.initializeDriver();
+        WebDriverManager.chromedriver().setup();
 
-        driver.get(ConfigReader.getProperty("baseUrl"));
+        ChromeOptions options = new ChromeOptions();
+
+        options.addArguments("--remote-allow-origins=*");
+
+        driver = new ChromeDriver(options);
+
+        driver.manage().window().maximize();
+
+        driver.manage().timeouts()
+                .implicitlyWait(Duration.ofSeconds(10));
+
+        driver.get("https://automationexercise.com/");
     }
 
     @AfterMethod
-    public void teardown() {
+    public void tearDown() {
 
         if (driver != null) {
             driver.quit();

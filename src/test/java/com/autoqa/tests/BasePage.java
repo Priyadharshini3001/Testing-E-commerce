@@ -1,47 +1,52 @@
-package com.autoqa.base;
+package com.autoqa.tests;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class BasePage {
 
     WebDriver driver;
+    WebDriverWait wait;
 
     public BasePage(WebDriver driver) {
+
         this.driver = driver;
+        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
     }
 
-    // Click Method
     public void click(By locator) {
 
-        WebElement element = driver.findElement(locator);
-
-        // Scroll to element
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView(true);", element);
-
-        // JS Click
-        js.executeScript("arguments[0].click();", element);
+        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
     }
 
-    // Type Method
     public void type(By locator, String text) {
 
-        driver.findElement(locator).clear();
-        driver.findElement(locator).sendKeys(text);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator))
+                .sendKeys(text);
     }
 
-    // Get Text
-    public String getText(By locator) {
-
-        return driver.findElement(locator).getText();
-    }
-
-    // Display Check
     public boolean isDisplayed(By locator) {
 
-        return driver.findElement(locator).isDisplayed();
+        try {
+            return wait.until(
+                    ExpectedConditions.visibilityOfElementLocated(locator)
+            ).isDisplayed();
+
+        } catch (Exception e) {
+
+            return false;
+        }
+    }
+
+    public String getText(By locator) {
+
+        return wait.until(
+                ExpectedConditions.visibilityOfElementLocated(locator)
+        ).getText();
     }
 }
